@@ -12,7 +12,7 @@ self.addEventListener("install", function (event) {
         "/src/css/app.css",
         "/src/css/feed.css",
         "/src/css/help.css",
-        "/scr/js/app.js",
+        "/src/js/app.js",
         "/src/js/feed.js",
         "/src/js/material.min.js",
       ];
@@ -41,7 +41,9 @@ self.addEventListener("activate", function (event) {
   return self.clients.claim();
 });
 
+//  ****** MY Block ***//////
 self.addEventListener("fetch", (event) => {
+  console.log("[Service Worker] Fetch data...", event);
   event.respondWith(
     caches.match(event.request).then((res) => {
       if (res) {
@@ -50,7 +52,8 @@ self.addEventListener("fetch", (event) => {
       }
       return fetch(event.request).then((res) => {
         console.log("Respone for Dynamic Caches Fetch", res);
-        return caches.open("Dynamic").then(async (cache) => {
+        return caches.open("Dynamic").then((cache) => {
+          console.log(cache,"chach from responese fetch data")
           cache.put(event.request.url, res.clone());
           return res;
         });
@@ -58,3 +61,21 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+//  ****** MY Block ***//////
+
+// *****Stackoverflow Block
+
+// self.addEventListener("fetch", function (event) {
+//   console.log(event);
+//   event.respondWith(
+//     caches.open("mysite-dynamic").then(function (cache) {
+//       return cache.match(event.request).then(function (response) {
+//         var fetchPromise = fetch(event.request).then(function (networkResponse) {
+//           cache.put(event.request, networkResponse.clone());
+//           return networkResponse;
+//         });
+//         return response || fetchPromise;
+//       });
+//     })
+//   );
+// });

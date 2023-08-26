@@ -29,3 +29,17 @@
   display: block;
   margin: 10px auto;
 }
+
+.save-btn {
+  margin-left: 0.1rem;
+  background-color: transparent;
+  border: none;
+  color: #323030;
+  outline: none;
+  transition: all ease 0.3s;
+  padding: 0.5rem;
+}
+
+.save-btn:hover {
+  background-color: #ff4081;
+}
